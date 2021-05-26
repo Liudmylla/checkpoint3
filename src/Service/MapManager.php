@@ -3,6 +3,7 @@ namespace App\Service;
 
 use App\Entity\Tile;
 use App\Repository\TileRepository;
+use App\Entity\Boat;
 
 class MapManager
 {
@@ -21,5 +22,12 @@ class MapManager
 
         return $tiles[$index];
        
+    }
+    public function checkTreasure(Boat $boat, Tile $tile): bool
+    {
+       if ($boat->getCoordX() === $tile->getCoordX() && $boat->getCoordX() === $tile->getCoordY() && $tile->getHasTreasure() === true)
+       {
+           return true;
+       }
     }
 }
