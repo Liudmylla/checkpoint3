@@ -66,8 +66,11 @@ class BoatController extends AbstractController
           $em->flush();
         }
         
-      echo $err = "No tile find";
-        
+        else {
+          $this->addFlash('success', 'no tile, so sorry');
+        }
+       
+     
        
        
         return $this->redirectToRoute('map');
