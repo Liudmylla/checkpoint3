@@ -19,22 +19,22 @@ class TileRepository extends ServiceEntityRepository
         parent::__construct($registry, Tile::class);
     }
 
-    // /**
-    //  * @return Tile[] Returns an array of Tile objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Tile[] Returns an array of Tile objects
+      */
+    
+    public function findOneByCoord($x,$y): ?Tile
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('t.coordX = :valX')
+            ->andWhere('t.coordY = :valY')
+            ->setParameter('valX', $x)
+            ->setParameter('valY', $y)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Tile

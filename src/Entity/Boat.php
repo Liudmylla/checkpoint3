@@ -27,7 +27,7 @@ class Boat
     private $coordX;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer" )
      */
     private $coordY;
 
