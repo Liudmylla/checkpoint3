@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\MapManager;
+use App\Repository\TileRepository;
 
 /**
  * @Route("/boat")
@@ -32,9 +33,10 @@ class BoatController extends AbstractController
      * Move the boat to direction
      * @Route("/{direction}", name="direction", requirements={"direction"="[NSEW]"}))
      */
-    public function moveDirection(string $direction, BoatRepository $boatRepository, EntityManagerInterface $em): Response
+    public function moveDirection(string $direction, BoatRepository $boatRepository, EntityManagerInterface $em, MapManager $mapManager): Response
     {
         $boat = $boatRepository->findOneBy([]);
+        $err = "";
         switch ($direction) {
             case 'E':
               $x = $boat->getCoordX()+1;
@@ -56,9 +58,18 @@ class BoatController extends AbstractController
             //     # code...
             //     break;
         }
-        $boat->setCoordX($x);
-        $boat->setCoordY($y);
-        $em->flush();
+     
+        if ($mapManager->tileExists($x,$y))
+        {
+          $boat->setCoordX($x);
+          $boat->setCoordY($y);
+          $em->flush();
+        }
+        
+      echo $err = "No tile find";
+        
+       
+       
         return $this->redirectToRoute('map');
     }
 }
